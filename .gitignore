@@ -1,0 +1,38 @@
+# ========== General ==========
+.DS_Store
+*.pem
+*.log
+*.orig.*
+
+# ========== Node.js Backend ==========
+server/node_modules/
+server/.env
+server/.env.local
+
+# ========== React Native / Expo Frontend ==========
+client/ambulance-client/node_modules/
+client/ambulance-client/.expo/
+client/ambulance-client/.expo-shared/
+client/ambulance-client/dist/
+client/ambulance-client/web-build/
+client/ambulance-client/expo-env.d.ts
+client/ambulance-client/npm-debug.*
+client/ambulance-client/yarn-debug.*
+client/ambulance-client/yarn-error.*
+client/ambulance-client/.metro-health-check*
+
+# ========== TypeScript Cache ==========
+*.tsbuildinfo
+
+# ========== Certificates / Keys ==========
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# ========== VS Code ==========
+.vscode/
+
+# ========== Firebase Service Key (if used) ==========
+server/firebase/firebase-service-account.json
