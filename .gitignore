@@ -3,6 +3,8 @@
 *.pem
 *.log
 *.orig.*
+*.jar
+
 
 # ========== Node.js Backend ==========
 server/node_modules/
