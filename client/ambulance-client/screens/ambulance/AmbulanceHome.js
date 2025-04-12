@@ -1,9 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button, Alert } from 'react-native';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../services/firebaseConfig';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../context/AuthContext';
+import { logoutUser } from '../../services/authService';
 
 export default function AmbulanceHome() {
   const navigation = useNavigation();
@@ -11,9 +10,9 @@ export default function AmbulanceHome() {
 
   const handleLogout = async () => {
     try {
-      await signOut(auth);
-      setUser(null); // clear context
-      navigation.replace('Login');
+      await logoutUser(); // central logout logic
+      setUser(null);      // clear context
+      navigation.replace('LoginScreen'); // navigate
     } catch (err) {
       Alert.alert('Logout Error', err.message);
     }

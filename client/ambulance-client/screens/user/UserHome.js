@@ -1,20 +1,33 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
-import { logoutUser } from '../../services/authService';
+import { View, Text, StyleSheet, Button, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../../context/AuthContext';
+import { logoutUser } from '../../services/authService'; // ✅ import shared logout function
 
 export default function UserHome() {
+  const navigation = useNavigation();
+  const { setUser } = useAuth();
+
   const handleLogout = async () => {
     try {
-      await logoutUser();
-    } catch (err) {
-      console.error('Logout failed:', err.message);
+      await logoutUser(); // ✅ use it here
+      setUser(null);
+      navigation.replace('LoginScreen');
+    } catch (error) {
+      Alert.alert('Logout Failed', error.message);
+      console.error('Logout error:', error);
     }
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Welcome to the User Dashboard</Text>
-      <Button title="Logout" onPress={handleLogout} />
+    <View style={styles.container}>
+      <Text style={styles.text}>Welcome to the User Dashboard</Text>
+      <Button title="Logout" onPress={handleLogout} color="#007bff" />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff' },
+  text: { fontSize: 22, fontWeight: 'bold', marginBottom: 20 }
+});

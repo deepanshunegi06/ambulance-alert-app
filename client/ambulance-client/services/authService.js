@@ -10,5 +10,11 @@ export const loginUser = async (email, password) => {
 
 // 🔓 Logout user
 export const logoutUser = async () => {
-  await signOut(auth);
+  try {
+    await signOut(auth);
+  } catch (error) {
+    console.error('Logout failed:', error.message);
+    throw error; // So the component using it can show an alert or handle it
+  }
 };
+

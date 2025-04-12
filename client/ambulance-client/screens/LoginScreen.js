@@ -9,6 +9,8 @@ import {
   ScrollView,
   TouchableOpacity,
   ImageBackground,
+  Keyboard, 
+  TouchableWithoutFeedback,
   KeyboardAvoidingView,
   Platform,
   StatusBar,
@@ -16,6 +18,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { loginUser } from '../services/authService';
+
 import { fetchUserByUID } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
@@ -26,7 +29,6 @@ export default function LoginScreen() {
   const navigation = useNavigation();
   const { setUser } = useAuth();
 
-  // Create refs for better keyboard handling
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
@@ -41,7 +43,7 @@ export default function LoginScreen() {
       const firebaseUser = await loginUser(email, password);
       const profile = await fetchUserByUID(firebaseUser.uid);
       setUser(profile);
-
+ 
       if (profile.role === 'user') navigation.replace('UserHome');
       else if (profile.role === 'ambulance') navigation.replace('AmbulanceHome');
       else if (profile.role === 'hospital') navigation.replace('HospitalHome');
@@ -54,130 +56,130 @@ export default function LoginScreen() {
     }
   };
 
-  const getButtonColor = () => {
-    return '#3498db'; // Default blue, could be made dynamic based on user role if needed
-  };
-
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
-      <ImageBackground
-        source={require('../assets/medical-background.webp') // adjust path if in a different location
-        } // Replace with your actual image path
-        style={styles.backgroundImage}
-        resizeMode="cover"
-      >
-        <View style={styles.overlay} />
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={styles.keyboardAvoid}
-        >
-          <ScrollView
-            contentContainerStyle={styles.container}
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={{ flex: 1 }}>
+          <StatusBar backgroundColor="#005aab" barStyle="light-content" />
+          <ImageBackground
+            source={require('../assets/medical-background.webp')}
+            style={styles.backgroundImage}
+            resizeMode="cover"
           >
-            <View style={styles.headerContainer}>
-              <Text style={styles.headerTitle}>MediCare</Text>
-              <Text style={styles.headerSubtitle}>Healthcare Emergency Network</Text>
-            </View>
-
-            <View style={styles.formCard}>
-              <Text style={styles.title}>Welcome Back</Text>
-
-              <View style={styles.inputContainer}>
-                <Text style={styles.inputLabel}>Email</Text>
-                <View style={styles.inputWrapper}>
-                  <TextInput
-                    ref={emailRef}
-                    placeholder="your.email@example.com"
-                    value={email}
-                    onChangeText={setEmail}
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    style={styles.input}
-                    returnKeyType="next"
-                    onSubmitEditing={() => passwordRef.current.focus()}
-                    placeholderTextColor="#a0a0a0"
-                  />
-                </View>
-              </View>
-
-              <View style={styles.inputContainer}>
-                <Text style={styles.inputLabel}>Password</Text>
-                <View style={styles.inputWrapper}>
-                  <TextInput
-                    ref={passwordRef}
-                    placeholder="Enter your password"
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry
-                    style={styles.input}
-                    returnKeyType="done"
-                    placeholderTextColor="#a0a0a0"
-                  />
-                </View>
-              </View>
-
-              <TouchableOpacity
-                style={[styles.loginButton, { backgroundColor: getButtonColor() }]}
-                onPress={handleLogin}
-                disabled={loading}
+            <View style={styles.overlay} />
+            <KeyboardAvoidingView
+              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              style={styles.keyboardAvoid}
+            >
+              <ScrollView
+                contentContainerStyle={styles.container}
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}
               >
-                {loading ? (
-                  <ActivityIndicator size="small" color="#ffffff" />
-                ) : (
-                  <Text style={styles.loginButtonText}>Login</Text>
-                )}
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.forgotPasswordContainer}>
-                <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-              </TouchableOpacity>
-
-              <View style={styles.registerContainer}>
-                <Text style={styles.registerText}>Don't have an account?</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-                  <Text style={[styles.registerLink, { color: getButtonColor() }]}>Register</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </ScrollView>
-        </KeyboardAvoidingView>
-      </ImageBackground>
+                <View style={styles.headerContainer}>
+                  <Text style={styles.headerTitle}>MediCare</Text>
+                  <Text style={styles.headerSubtitle}>Healthcare Emergency Network</Text>
+                </View>
+  
+                <View style={styles.formCard}>
+                  <Text style={styles.title}>Welcome Back</Text>
+  
+                  {/* Email input */}
+                  <View style={styles.inputContainer}>
+                    <Text style={styles.inputLabel}>Email</Text>
+                    <View style={styles.inputWrapper}>
+                      <TextInput
+                        ref={emailRef}
+                        placeholder="your.email@example.com"
+                        value={email}
+                        onChangeText={setEmail}
+                        keyboardType="email-address"
+                        autoCapitalize="none"
+                        style={styles.input}
+                        returnKeyType="next"
+                        onSubmitEditing={() => passwordRef.current.focus()}
+                        placeholderTextColor="#a0a0a0"
+                      />
+                    </View>
+                  </View>
+  
+                  {/* Password input */}
+                  <View style={styles.inputContainer}>
+                    <Text style={styles.inputLabel}>Password</Text>
+                    <View style={styles.inputWrapper}>
+                      <TextInput
+                        ref={passwordRef}
+                        placeholder="Enter your password"
+                        value={password}
+                        onChangeText={setPassword}
+                        secureTextEntry
+                        style={styles.input}
+                        returnKeyType="done"
+                        placeholderTextColor="#a0a0a0"
+                      />
+                    </View>
+                  </View>
+  
+                  {/* Login button */}
+                  <TouchableOpacity
+                    style={[styles.loginButton, { backgroundColor: '#3498db' }]}
+                    onPress={handleLogin}
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <ActivityIndicator size="small" color="#ffffff" />
+                    ) : (
+                      <Text style={styles.loginButtonText}>Login</Text>
+                    )}
+                  </TouchableOpacity>
+  
+                  {/* Forgot password */}
+                  <TouchableOpacity
+                    style={styles.forgotPasswordContainer}
+                    onPress={() => navigation.navigate('ForgotPassword')}
+                  >
+                    <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+                  </TouchableOpacity>
+  
+                  {/* Register */}
+                  <View style={styles.registerContainer}>
+                    <Text style={styles.registerText}>Don't have an account?</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
+                      <Text style={[styles.registerLink, { color: '#3498db' }]}>Register</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </ScrollView>
+            </KeyboardAvoidingView>
+          </ImageBackground>
+        </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
+  
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-  },
-
+  safeArea: { flex: 1 },
   backgroundImage: {
     flex: 1,
     width: '100%',
     height: '100%',
-    alignSelf: 'center',     // centers the image horizontally
-    justifyContent: 'flex-start', // aligns it from the top
+    alignSelf: 'center',
+    justifyContent: 'flex-start',
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 40, 70, 0.65)', // Slightly darker blue overlay
+    backgroundColor: 'rgba(0, 40, 70, 0.65)',
   },
-  keyboardAvoid: {
-    flex: 1,
-  },
+  keyboardAvoid: { flex: 1 },
   container: {
     flexGrow: 1,
     justifyContent: 'center',
     padding: 20,
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight + 40 : 40,
   },
-  headerContainer: {
-    alignItems: 'center',
-    marginBottom: 30,
-  },
+  headerContainer: { alignItems: 'center', marginBottom: 30 },
   headerTitle: {
     fontSize: 36,
     fontWeight: 'bold',
@@ -186,11 +188,7 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 5,
   },
-  headerSubtitle: {
-    fontSize: 16,
-    color: '#e0e0e0',
-    marginTop: 5,
-  },
+  headerSubtitle: { fontSize: 16, color: '#e0e0e0', marginTop: 5 },
   formCard: {
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
     borderRadius: 20,
@@ -208,9 +206,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#2c3e50',
   },
-  inputContainer: {
-    marginBottom: 16,
-  },
+  inputContainer: { marginBottom: 16 },
   inputLabel: {
     fontSize: 14,
     fontWeight: '600',
@@ -254,6 +250,7 @@ const styles = StyleSheet.create({
   forgotPasswordText: {
     color: '#7f8c8d',
     fontSize: 14,
+    fontWeight: 'bold',
   },
   registerContainer: {
     flexDirection: 'row',
@@ -261,13 +258,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
   },
-  registerText: {
-    color: '#7f8c8d',
-    fontSize: 15,
-  },
-  registerLink: {
-    marginLeft: 5,
-    fontWeight: 'bold',
-    fontSize: 15,
-  },
+  registerText: { color: '#7f8c8d', fontSize: 15 },
+  registerLink: { marginLeft: 5, fontWeight: 'bold', fontSize: 15 },
 });

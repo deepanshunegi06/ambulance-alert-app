@@ -1,9 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../services/firebaseConfig';
-import { useAuth } from '../../context/AuthContext';
+import { logoutUser } from '../../services/authService'; // ✅ import logout function
 
 export default function HospitalHome() {
   const navigation = useNavigation();
@@ -11,9 +9,9 @@ export default function HospitalHome() {
 
   const handleLogout = async () => {
     try {
-      await signOut(auth);
+      await logoutUser(); // ✅ use shared logout function
       setUser(null);
-      navigation.replace('Login');
+      navigation.replace('LoginScreen');
     } catch (error) {
       Alert.alert('Logout Failed', error.message);
       console.error('Logout error:', error);

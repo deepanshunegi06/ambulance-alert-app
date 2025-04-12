@@ -1,64 +1,164 @@
-# Ambulance Alert App
+# 🚑 Ambulance Alert App (In Development)
 
-A real-time ambulance alert and tracking system built with modern web technologies.
+The **Ambulance Alert App** is a healthcare emergency response system currently in active development. Our goal is to create a seamless communication network between patients, ambulance drivers, and hospitals — helping save lives with faster and smarter emergency response.
 
-## 🚀 Tech Stack
+This project is being built as a proof of concept / MVP (Minimum Viable Product) and will continue evolving with more real-time and intelligent features.
 
-- **Backend**: Node.js with Express
-- **Database**: MongoDB
-- **Frontend**: (To be implemented)
+---
 
-## 📋 Prerequisites
+## 🔧 Current Status: MVP Development
 
-- Node.js (v14 or higher)
-- MongoDB
-- npm or yarn
+We are actively working on building out the following core functionalities:
+- Secure authentication for patients, ambulances, and hospitals
+- Role-based home screens and navigation
+- Emergency request management
+- Real-time data sync (coming soon)
+- Firebase-powered backend authentication
 
-## 🔧 Installation
+---
 
-1. Clone the repository:
-```bash
-git clone [your-repository-url]
-cd ambulance-alert-app
-```
+## 🧩 Features Implemented (So Far)
 
-2. Install dependencies:
-```bash
-npm install
-```
+### ✅ Role-Based Access
+- **Patients / Users**
+  - Register & login with email
+  - Forgot password via email reset
+  - Navigate to a personalized home screen
+- **Ambulance Operators**
+  - Role-specific registration with vehicle details
+  - Dedicated screen for handling requests
+- **Hospitals**
+  - Register hospital with essential info
+  - Access a hospital-specific view
 
-3. Create a `.env` file in the server directory with the following variables:
-```
-PORT=5000
-MONGO_URI=your_mongodb_connection_string
-```
+### ✅ Authentication
+- Firebase Authentication (email/password)
+- Firebase Admin SDK for role control
+- Persistent login support
+- Secure route access per role
 
-## 🏗️ Project Structure
+### ✅ Frontend (React Native + Expo)
+- Modern, minimal UI with responsive design
+- Role-based navigation flows
+- Auth context via React Context API
+
+### ✅ Backend (Node.js + Express)
+- MongoDB to store user/role data
+- REST API for user registration & retrieval
+- Firebase token validation middleware
+
+---
+
+## ⚙️ Project Structure
 
 ```
 ambulance-alert-app/
+├── client/
+│   └── ambulance-client/
+│       ├── assets/
+│       ├── components/
+│       ├── context/
+│       ├── navigation/
+│       ├── screens/
+│       ├── services/
+│       ├── App.js
+│       └── app.json
 ├── server/
-│   └── index.js      # Main server file
+│   ├── config/
+│   ├── controllers/
+│   ├── firebase/
+│   ├── models/
+│   ├── routes/
+│   ├── app.js
+│   └── server.js
+├── .env
+├── .gitignore
 └── README.md
 ```
 
-## 🚀 Current Progress
+---
 
-### Backend Setup
-- ✅ Express server configuration
-- ✅ MongoDB connection setup
-- ✅ Basic middleware configuration (CORS, JSON parsing)
-- ✅ Environment variable configuration
+## 🚧 In Progress / Coming Soon
 
-### Next Steps
-- [ ] Implement API routes for:
-  - Ambulance tracking
-  - Emergency alerts
-  - User management
-- [ ] Set up frontend application
-- [ ] Implement real-time features
-- [ ] Add authentication system
+These features are part of our Phase 2 development:
 
-## 📝 License
+- [ ] 🔴 **Live GPS Tracking** for ambulances and users
+- [ ] 🔔 **Push Notifications** using Firebase Cloud Messaging (FCM)
+- [ ] 📡 **Nearby Alerts System** for users close to an emergency
+- [ ] 📊 **Hospital Bed Availability** API & UI
+- [ ] 💬 **In-app Chat** between hospital and ambulance
+- [ ] 💳 **Payment Integration** for ambulance services
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+---
+
+## 🚀 How to Run the Project Locally
+
+### ⚙️ Backend Setup
+1. Go to the backend directory:
+   ```bash
+   cd server
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Add a `.env` file with:
+   ```
+   PORT=5000
+   MONGO_URI=<your-mongodb-uri>
+   ```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+### 📱 Frontend Setup
+1. Go to the frontend:
+   ```bash
+   cd client/ambulance-client
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the Expo dev server:
+   ```bash
+   npm start
+   ```
+
+---
+
+## 📦 Tech Stack
+
+| Layer         | Technology               |
+|---------------|--------------------------|
+| Frontend      | React Native + Expo      |
+| Backend       | Node.js + Express.js     |
+| Database      | MongoDB                  |
+| Auth System   | Firebase Authentication  |
+| Real-Time Data| Firebase Admin SDK       |
+| APIs          | Axios + RESTful Routes   |
+| State Mgmt    | React Context API        |
+
+---
+
+## 🔮 Future Scope
+
+- Admin panel to manage system-level access
+- Voice-enabled emergency reporting
+- Telemedicine integration (video consults)
+- Multilingual support
+- Advanced analytics dashboard for hospitals & operators
+- AI-based ETA prediction for ambulances
+
+---
+
+## 🤝 Contributing
+
+We are currently in a fast-moving build phase, but open to collaborations! If you're a developer, designer, or have domain expertise, feel free to fork the repo, start a new branch, and open a pull request.
+
+---
+
+## 📜 License
+
+This project is currently under development and is open-sourced under the [MIT License](LICENSE).
